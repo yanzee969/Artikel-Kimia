@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sains di Balik Rasa Cinta</title>
+    <meta name="description"
+        content="Artikel sains populer: biokimia cinta—dopamin, oksitosin, endorfin—dan kaitannya dengan budaya & kehidupan modern." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b0b0c;
+            --bg-gradient: linear-gradient(180deg, #0b0b0c, #101218);
+            --text: #e9eaee;
+            --muted: #b5b8c9;
+            --card: #15161a;
+            --accent: #f43f5e;
+            --accent-2: #a855f7;
+            --ring: #fda4af;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+            --header-bg: linear-gradient(180deg, rgba(0, 0, 0, .6), rgba(0, 0, 0, .2));
+            --card-bg: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .01));
+        }
+
+        :root.light {
+            --bg: #ffffff;
+            --bg-gradient: linear-gradient(180deg, #ffffff, #f8fafc);
+            --text: #1f2937;
+            --muted: #6b7280;
+            --card: #ffffff;
+            --accent: #e11d48;
+            --accent-2: #7c3aed;
+            --ring: #f43f5e;
+            --shadow: 0 10px 30px rgba(0, 0, 0, .07);
+            --header-bg: linear-gradient(180deg, rgba(255, 255, 255, .95), rgba(255, 255, 255, .8));
+            --card-bg: linear-gradient(180deg, rgba(0, 0, 0, .02), rgba(0, 0, 0, .01));
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, Arial, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+            border-radius: 1rem
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: saturate(120%) blur(8px);
+            background: var(--header-bg);
+            border-bottom: 1px solid rgba(0, 0, 0, .08)
+        }
+
+        :root.light header {
+            border-bottom-color: rgba(0, 0, 0, .08)
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            justify-content: space-between;
+            padding: 14px 24px
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            letter-spacing: .3px
+        }
+
+        .logo {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: radial-gradient(circle at 30% 30%, var(--accent), var(--accent-2));
+            box-shadow: 0 6px 20px rgba(244, 63, 94, .45)
+        }
+
+        .nav a {
+            opacity: .9
+        }
+
+        .nav a:hover {
+            opacity: 1
+        }
+
+        /* Progress bar */
+        .progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            width: 0;
+            z-index: 60
+        }
+
+        /* Hero */
+        .hero {
+            padding: 48px 0 8px
+        }
+
+        .title {
+            font-size: clamp(28px, 3vw, 40px);
+            font-weight: 800;
+            line-height: 1.15;
+            margin: 0 0 8px
+        }
+
+        .subtitle {
+            color: var(--muted);
+            max-width: 60ch
+        }
+
+        .meta {
+            margin-top: 12px;
+            color: var(--muted);
+            font-size: .95rem;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        /* Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: 3fr 1.1fr;
+            gap: 28px;
+            margin-top: 24px
+        }
+
+        @media (max-width: 980px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        /* Article */
+        article {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 0, 0, .08);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: var(--shadow)
+        }
+
+        :root.light article {
+            border-color: rgba(0, 0, 0, .08)
+        }
+
+        article h2 {
+            font-size: 1.4rem;
+            margin: 28px 0 10px
+        }
+
+        article h3 {
+            font-size: 1.15rem;
+            margin: 22px 0 8px
+        }
+
+        article p {
+            line-height: 1.75;
+            margin: 12px 0
+        }
+
+        article ul {
+            margin: 10px 0 10px 20px
+        }
+
+        .figure {
+            margin: 18px 0
+        }
+
+        .figure figcaption {
+            color: var(--muted);
+            font-size: .9rem;
+            margin-top: 8px
+        }
+
+        blockquote {
+            margin: 18px 0;
+            padding: 14px 16px;
+            border-left: 4px solid var(--accent);
+            background: rgba(0, 0, 0, .04);
+            border-radius: 8px
+        }
+
+        :root.light blockquote {
+            background: rgba(0, 0, 0, .02)
+        }
+
+        /* Aside */
+        aside {
+            position: sticky;
+            top: 90px;
+            align-self: start;
+            display: flex;
+            flex-direction: column;
+            gap: 18px
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid rgba(0, 0, 0, .08);
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: var(--shadow)
+        }
+
+        :root.light .card {
+            border-color: rgba(0, 0, 0, .08)
+        }
+
+        .profile {
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+
+        .avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2))
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: .8rem;
+            background: rgba(244, 63, 94, .15);
+            border: 1px solid rgba(244, 63, 94, .35)
+        }
+
+        /* Footer */
+        footer {
+            margin: 28px 0 60px;
+            color: var(--muted);
+            font-size: .9rem
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            border-top: 1px dashed rgba(0, 0, 0, .15);
+            padding-top: 18px
+        }
+
+        /* TOC */
+        .toc ul {
+            list-style: none;
+            margin: 0;
+            padding: 0
+        }
+
+        .toc a {
+            display: block;
+            padding: 6px 8px;
+            border-radius: 8px;
+            color: var(--muted)
+        }
+
+        .toc a.active,
+        .toc a:hover {
+            color: var(--text);
+            background: rgba(0, 0, 0, .06)
+        }
+
+        :root.light .toc a.active,
+        :root.light .toc a:hover {
+            background: rgba(0, 0, 0, .06)
+        }
+
+        /* Buttons */
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center
+        }
+
+        .btn {
+            padding: 10px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, .15);
+            background: rgba(0, 0, 0, .04);
+            cursor: pointer
+        }
+
+        .btn:hover {
+            background: rgba(0, 0, 0, .08)
+        }
+
+        :root.light .btn {
+            border-color: rgba(0, 0, 0, .15);
+            background: rgba(0, 0, 0, .04)
+        }
+
+        :root.light .btn:hover {
+            background: rgba(0, 0, 0, .08)
+        }
+
+        .btn-accent {
+            border-color: transparent !important;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2)) !important;
+            color: white !important
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress" id="progress"></div>
+    <header>
+        <nav class="nav">
+            <div class="brand"><span class="logo" aria-hidden="true"></span><span>Sains Cinta</span></div>
+            <div class="controls">
+                <a class="btn" href="#daftar-pustaka">Daftar Pustaka</a>
+                <button class="btn" id="toggleTheme" aria-label="Ganti tema">☀️/🌙</button>
+                <a class="btn btn-accent" href="#unduh">Unduh PDF</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <h1 class="title">Sains di Balik Rasa Cinta: Mengurai Biokimia Emosi</h1>
+            <p class="subtitle">Menyelam ke mekanisme dopamin, oksitosin, dan endorfin—serta bagaimana budaya
+                menautkannya dalam kehidupan kita sehari-hari.</p>
+            <div class="meta"><span>Ditulis oleh: <strong>Kafi Yudhoyono</strong></span>•<span>Diperbarui: <time
+                        datetime="2025-08-28">28 Agustus 2025</time></span>•<span class="badge">Social & Cultural
+                    Chemistry Facts</span></div>
+        </section>
+
+        <section class="grid" aria-label="Tata letak artikel">
+            <article id="konten">
+                <figure class="figure">
+                    <!-- Ganti src dengan gambar pilihanmu -->
+                    <img src="image1.png" alt="Ilustrasi jalur dopamin-oksitosin di otak yang berkaitan dengan cinta" />
+                    <figcaption>Gambar 1. Ilustrasi Sains Cinta (dibuat dengan bantuan ChatGPT)”.</figcaption>
+                </figure>
+            
+                <h2 id="pendahuluan">Pendahuluan</h2>
+                <p>Cinta sering dianggap magis dan sulit dijelaskan. Di balik degup jantung dan perasaan berbunga, otak
+                    melepaskan molekul yang membentuk pengalaman emosional kita. Artikel ini mengulas zat kimia yang
+                    terlibat dalam cinta dan dampaknya pada kehidupan sosial, memadukan perspektif biologi, psikologi,
+                    dan budaya.Pernah nggak sih kamu merasa jantungan pas lagi jatuh cinta? Jantungan, deg-degan, atau bahkan nggak
+                    bisa tidur karena
+                    mikirin seseorang? Itu semua bukan cuma soal perasaan, lho. Di balik rasa bahagia atau rindu yang bikin hidup
+                    lebih
+                    berwarna, otak kita sedang bekerja keras, mengeluarkan zat-zat kimia yang membuat kita merasa hidup. Cinta,
+                    ternyata,
+                    adalah campuran ajaib antara emosi, biologi, dan budaya yang kita jalani setiap hari.</p>
+            
+                <p>Artikel ini mau ngajak kamu menyelami: apa sih zat kimia yang bikin kita jatuh cinta? Dan, bagaimana cinta ini
+                    memengaruhi hidup kita di dunia modern? Dengan sedikit bumbu sains dan cerita kehidupan sehari-hari, kita akan
+                    lihat
+                    bahwa cinta bukan cuma puisi, tapi juga fenomena ilmiah yang super keren. Yuk, kita mulai!</p>
+            
+            
+                <h2 id="metode">Metode Penelitian</h2>
+                <p>Artikel ini dibuat dengan cara menyelami buku-buku dan jurnal ilmiah, seperti The Molecular Basis of Love
+                    (Babková &
+                    Repiská, 2025), Love as a natural addiction (Esch & Stefano, 2025), dan beberapa artikel seru dari Verywell
+                    Mind. Kami
+                    merangkum fakta-fakta ilmiah ini dengan gaya yang mudah dicerna, menghubungkan sains tentang cinta dengan
+                    kisah-kisah
+                    sosial yang dekat dengan kita. Jadi, kamu bisa paham bagaimana otak dan budaya bekerja bareng untuk bikin cinta
+                    jadi
+                    pengalaman yang luar biasa.</p>
+            
+                <h2 id="pembahasan">Pembahasan</h2>
+                <h3 id="biokimia">Cinta: Drama Kimia di Otak Kita</h3>
+                <p>Bayangin cinta itu kayak tiga babak dalam sebuah cerita: hasrat, ketertarikan, dan ikatan yang dalam. Setiap
+                    babak punya
+                    “pemain” utama, yaitu hormon dan zat kimia di otak seperti dopamin, oksitosin, vasopresin, serotonin,
+                    testosteron,
+                    neurotropin, kortisol, dan endorfin. Mereka ini yang bikin kita merasakan cinta dalam berbagai rasa dan warna.
+                </p>
+            
+                <h3 id="dopamin">Dopamin: Bikin Hati Berbunga-bunga</h3>
+                <p>kamu merasa super bahagia, bersemangat, bahkan kadang lupa makan karena mikirin dia. Mirip banget sama efek obat,
+                    makanya kita bisa merasa “kecanduan” sama seseorang. Dopamin ini mendorong kita untuk terus dekat dengan
+                    pasangan,
+                    mencari momen seru bareng mereka.</p>
+            
+                <h3 id="oksitosin">Oksitosin: Pelukan yang Bikin Nyaman</h3>
+                <p>Oksitosin, atau yang sering disebut “hormon pelukan,” adalah perekat hubungan. Zat ini keluar saat kita pelukan,
+                    ciuman,
+                    atau sekadar pegangan tangan. Oksitosin bikin kita merasa percaya dan dekat sama pasangan. Penelitian bilang,
+                    pasangan
+                    yang punya kadar oksitosin seimbang biasanya punya hubungan yang lebih awet dan harmonis. Hormon ini juga bikin
+                    kita
+                    merasa nyaman, nggak cuma sama pacar, tapi juga keluarga atau temen dekat.</p>
+            
+                <h3 id="endorfin">Endorfin: Ketenangan Setelah Badai Cinta</h3>
+                <p>Setelah fase awal yang penuh drama dan bunga-bunga, endorfin datang membawa rasa tenang. Zat ini kayak pelukan
+                    hangat
+                    dari dalam, bikin kita merasa aman dan nyaman di hubungan jangka panjang. Selain itu, vasopresin bantu jaga
+                    kesetiaan,
+                    serotonin atur emosi biar nggak kelewatan, dan testosteron kasih dorongan gairah. Ada juga neurotropin, seperti
+                    NGF,
+                    yang bikin perasaan cinta di awal terasa lebih intens, dan kortisol yang bikin kita lebih pengen dekat sama
+                    orang lain
+                    saat hubungan masih baru.</p>
+            
+                <h3 id="sosial-budaya">Cinta dan Cara Kita Hidup</h3>
+                <p>Cinta nggak cuma soal apa yang ada di otak, tapi juga tentang budaya di sekitar kita. Misalnya, kenapa sih kita
+                    suka
+                    kasih cokelat buat orang yang disayang? Ternyata, cokelat punya zat bernama phenylethylamine (PEA) yang bikin
+                    hati
+                    senang. Tapi, cinta juga bisa bikin pusing, lho—pikirkan cemburu atau patah hati yang bikin hati ambyar. Di
+                    banyak
+                    budaya, tradisi seperti pernikahan bikin ikatan emosional makin kuat lewat momen-momen spesial yang memicu
+                    oksitosin dan
+                    endorfin.</p>
+            
+                <h3 id="sosial-budaya">Kenapa Cinta Penting di Zaman Sekarang</h3>
+                <p>Cinta, entah itu sama pasangan, keluarga, atau sahabat, punya efek besar buat kesehatan kita. Sains bilang, cinta
+                    bisa
+                    nyalain bagian otak yang sama kayak saat kita kecanduan sesuatu, karena dopamin yang bikin kita ketagihan rasa
+                    bahagia.
+                    Tapi, kalau cinta berakhir, bisa bikin stres berat, bahkan bikin jantungan sementara karena hormon stres seperti
+                    kortisol naik drastis.</p>
+            
+                <p>Di zaman sekarang, media sosial bikin kita gampang dapat “dosis” dopamin dari like atau chat, tapi ini kadang
+                    bikin
+                    hubungan asli jadi kurang hangat. Gaya hidup modern, seperti jarang olahraga, juga bisa nurunin testosteron,
+                    yang bikin
+                    gairah atau koneksi sosial melempem. Tapi jangan khawatir! Ada cara simpel buat ngatasin ini. Coba deh teknik
+                    relaksasi,
+                    seperti tarik napas dalam-dalam atau meditasi. Ini bisa bantu nurunin stres, baik setelah putus cinta atau saat
+                    kita
+                    lagi berjuang dengan kebiasaan buruk. Relaksasi juga bikin tubuh lebih sehat, kurang stres, dan bantu kita hidup
+                    lebih
+                    lama dengan hubungan yang lebih kuat.</p>
+            
+                <h2 id="kesimpulan">Kesimpulan</h2>
+                <p>Cinta itu seperti resep ajaib: ada dopamin yang bikin hati berbunga, oksitosin yang bikin kita merasa dekat, dan
+                    endorfin yang kasih ketenangan. Dengan sedikit bantuan dari sains, kita bisa lihat betapa luar biasanya
+                    cinta—bukan cuma
+                    soal perasaan, tapi juga fenomena ilmiah yang bikin hidup lebih indah. Jadi, nikmati setiap momen cinta, karena
+                    itu
+                    nggak cuma bikin hati senang, tapi juga bikin kita lebih sehat dan bahagia!</p>
+            
+                <h2 id="daftar-pustaka">Daftar Pustaka</h2>
+                <ul>
+                    <li>Babková, J., &amp; Repiská, G. (2025). <em>The Molecular Basis of Love</em>. <em>IJMS</em>,
+                        26(4), 1533. https://doi.org/10.3390/ijms26041533</li>
+                    <li>Esch, T., &amp; Stefano, G. B. (2025). <em>Love as a natural addiction</em>. <em>Cognitive,
+                            Affective, &amp; Behavioral Neuroscience</em>. https://doi.org/10.3758/s13415-025-01333-w
+                    </li>
+                    <li>Patil, Y. (2014). <em>Chemical Foundations of Love</em>. <em>International Journal of Scientific
+                            &amp; Engineering Research</em>.</li>
+                    <li>Pearce, E., Wlodarski, R., Machin, A., &amp; Dunbar, R. I. M. (2017). <em>PNAS</em>, 114(20),
+                        5300–5305. https://doi.org/10.1073/pnas.1700712114</li>
+            
+                    <li>Verywell Mind. (n.d.). <em>The Science of Love</em>. Diakses dari https://www.verywellmind.com
+                    </li>
+                </ul>
+            
+                <div id="unduh" class="figure">
+                    <button class="btn btn-accent" onclick="window.print()">Cetak / Simpan PDF</button>
+                </div>  
+            </article>
+
+            <aside aria-label="Sidebar">
+                <div class="card profile">
+                    <div class="avatar" aria-hidden="true"></div>
+                    <div>
+                        <strong>Kafi Yudhoyono</strong>
+                        <div class="muted" style="color:var(--muted);font-size:.9rem">Mahasiswa | Pecinta sains populer
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card toc">
+                    <strong>Isi Artikel</strong>
+                    <ul>
+                        <li><a href="#pendahuluan">Pendahuluan</a></li>
+                        <li><a href="#metode">Metode Penelitian</a></li>
+                        <li><a href="#pembahasan">Pembahasan</a></li>
+                        <li><a href="#biokimia">— Biokimia</a></li>
+                        <li><a href="#dopamin">— Dopamin</a></li>
+                        <li><a href="#oksitosin">— Oksitosin</a></li>
+                        <li><a href="#endorfin">— Endorfin</a></li>
+                        <li><a href="#sosial-budaya">— Sosial & Budaya</a></li>
+                        <li><a href="#kesimpulan">Kesimpulan</a></li>
+                        <li><a href="#daftar-pustaka">Daftar Pustaka</a></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <strong>Catatan Penulis</strong>
+                    <p style="margin-top:8px;color:var(--muted)">-</p>
+                </div>
+            </aside>
+        </section>
+
+        <footer>
+            <div class="footer-inner">
+                <div>© <span id="y"></span> Kafi Yudhoyono. Semua hak cipta dilindungi.</div>
+                <div><a href="#">Kebijakan Privasi</a> · <a href="#">Disclaimer</a></div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Tahun footer
+        document.getElementById('y').textContent = new Date().getFullYear();
+
+        // Toggle tema - fixed localStorage fallback
+        const root = document.documentElement;
+        const toggle = document.getElementById('toggleTheme');
+
+        // Check saved theme or default to dark
+        let currentTheme = 'dark';
+        try {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'light') {
+                currentTheme = 'light';
+                root.classList.add('light');
+            }
+        } catch (e) {
+            // localStorage not available, use default
+        }
+
+        toggle.addEventListener('click', () => {
+            root.classList.toggle('light');
+            currentTheme = root.classList.contains('light') ? 'light' : 'dark';
+
+            try {
+                localStorage.setItem('theme', currentTheme);
+            } catch (e) {
+                // localStorage not available, continue without saving
+            }
+        });
+
+        // Progress bar
+        const progress = document.getElementById('progress');
+        const onScroll = () => {
+            const h = document.documentElement;
+            const scrolled = h.scrollTop;
+            const height = h.scrollHeight - h.clientHeight;
+            const pct = Math.min(100, (scrolled / height) * 100);
+            progress.style.width = pct + '%';
+            // TOC highlight
+            document.querySelectorAll('.toc a').forEach(a => a.classList.remove('active'));
+            const ids = ['pendahuluan', 'metode', 'pembahasan', 'biokimia', 'dopamin', 'oksitosin', 'endorfin', 'sosial-budaya', 'kesimpulan', 'daftar-pustaka'];
+            let current = ids[0];
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                const rect = el.getBoundingClientRect();
+                if (rect.top <= 120) current = id;
+            });
+            const link = document.querySelector('.toc a[href="#' + current + '"]');
+            if (link) link.classList.add('active');
+        };
+        document.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    </script>
+</body>
+
+</html>
