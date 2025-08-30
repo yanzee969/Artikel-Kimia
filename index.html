@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
             --bg: #0b0b0c;
@@ -321,11 +322,13 @@
             border-radius: 12px;
             border: 1px solid rgba(0, 0, 0, .15);
             background: rgba(0, 0, 0, .04);
-            cursor: pointer
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
         .btn:hover {
-            background: rgba(0, 0, 0, .08)
+            background: rgba(0, 0, 0, .08);
+            transform: translateY(-1px);
         }
 
         :root.light .btn {
@@ -342,6 +345,113 @@
             background: linear-gradient(90deg, var(--accent), var(--accent-2)) !important;
             color: white !important
         }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .download-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .btn-small {
+            padding: 8px 12px;
+            font-size: 0.9rem;
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Print styles */
+        @media print {
+
+            header,
+            aside,
+            footer,
+            .controls,
+            .progress {
+                display: none !important;
+            }
+
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            .container {
+                padding: 0;
+                max-width: none;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            article {
+                border: none;
+                box-shadow: none;
+                background: white;
+                padding: 20px 0;
+            }
+
+            .title {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .subtitle {
+                color: #666;
+                margin-bottom: 20px;
+            }
+
+            .meta {
+                color: #666;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 15px;
+                margin-bottom: 25px;
+            }
+
+            h2 {
+                page-break-after: avoid;
+                margin-top: 25px !important;
+            }
+
+            h3 {
+                page-break-after: avoid;
+                margin-top: 20px !important;
+            }
+
+            p {
+                page-break-inside: avoid;
+                orphans: 3;
+                widows: 3;
+            }
+
+            .figure {
+                page-break-inside: avoid;
+            }
+        }
     </style>
 </head>
 
@@ -353,7 +463,7 @@
             <div class="controls">
                 <a class="btn" href="#daftar-pustaka">Daftar Pustaka</a>
                 <button class="btn" id="toggleTheme" aria-label="Ganti tema">☀️/🌙</button>
-                <a class="btn btn-accent" href="#unduh">Unduh PDF</a>
+                <button class="btn btn-accent" id="downloadBtn">📄 Unduh PDF</button>
             </div>
         </nav>
     </header>
@@ -363,8 +473,9 @@
             <h1 class="title">Sains di Balik Rasa Cinta: Mengurai Biokimia Emosi</h1>
             <p class="subtitle">Menyelam ke mekanisme dopamin, oksitosin, dan endorfin—serta bagaimana budaya
                 menautkannya dalam kehidupan kita sehari-hari.</p>
-            <div class="meta"><span>Ditulis oleh: <strong>Kafi Yudhoyono</strong></span>•<span>Diperbarui: <time
-                        datetime="2025-08-28">28 Agustus 2025</time></span>•<span class="badge">Social & Cultural
+            <div class="meta"><span>Ditulis oleh: <strong>Kafi Yudhoyono & Sofyan
+                        Efendi</strong></span>•<span>Diperbarui: <time datetime="2025-08-30">30 Agustus
+                        2025</time></span>•<span class="badge">Social & Cultural
                     Chemistry Facts</span></div>
         </section>
 
@@ -375,128 +486,171 @@
                     <img src="image1.png" alt="Ilustrasi jalur dopamin-oksitosin di otak yang berkaitan dengan cinta" />
                     <figcaption>Gambar 1. Ilustrasi Sains Cinta. (dibuat dengan bantuan ChatGPT)</figcaption>
                 </figure>
-            
+
                 <h2 id="pendahuluan">Pendahuluan</h2>
-                <p>Cinta sering dianggap magis dan sulit dijelaskan. Di balik degup jantung dan perasaan berbunga, otak
-                    melepaskan molekul yang membentuk pengalaman emosional kita. Artikel ini mengulas zat kimia yang
-                    terlibat dalam cinta dan dampaknya pada kehidupan sosial, memadukan perspektif biologi, psikologi,
-                    dan budaya.Pernah nggak sih kamu merasa jantungan pas lagi jatuh cinta? Jantungan, deg-degan, atau bahkan nggak
-                    bisa tidur karena
-                    mikirin seseorang? Itu semua bukan cuma soal perasaan, lho. Di balik rasa bahagia atau rindu yang bikin hidup
-                    lebih
-                    berwarna, otak kita sedang bekerja keras, mengeluarkan zat-zat kimia yang membuat kita merasa hidup. Cinta,
-                    ternyata,
-                    adalah campuran ajaib antara emosi, biologi, dan budaya yang kita jalani setiap hari.</p>
-            
-                <p>Artikel ini mau ngajak kamu menyelami: apa sih zat kimia yang bikin kita jatuh cinta? Dan, bagaimana cinta ini
-                    memengaruhi hidup kita di dunia modern? Dengan sedikit bumbu sains dan cerita kehidupan sehari-hari, kita akan
+                <p>Cinta dianggap misterius dan sulit dijelaskan. Molekul yang membentuk pengalaman emosional kita
+                    ditinggalkan oleh otak
+                    saat degup jantung dan perasaan bergelora. Dengan menggabungkan perspektif biologi, psikologi, dan
+                    budaya, penelitian
+                    ini menyelidiki zat kimia yang terlibat dalam cinta dan bagaimana pengaruhnya terhadap kehidupan
+                    sosial . Pernah gak sih
+                    saat jatuh cinta? Mikirin seseorang membuat Anda gelisah, atau bahkan tidak bisa tidur? Itu bukan
+                    hanya masalah
+                    perasaan. Otak kita bekerja keras untuk mengeluarkan zat kimia yang membuat kita merasa hidup di
+                    balik perasaan bahagia
+                    atau rindu yang membuat hidup kita lebih hidup. Ternyata cinta adalah kombinasi magis dari emosi,
+                    biologis, dan budaya
+                    yang kita alami setiap hari.</p>
+
+                <p>Apa sih zat kimia yang membuat kita jatuh cinta dalam artikel ini? Dan, bagaimana cinta ini
+                    memengaruhi hidup kita di dunia modern? Dengan sedikit bumbu sains dan cerita kehidupan sehari-hari,
+                    kita akan
                     lihat
                     bahwa cinta bukan cuma puisi, tapi juga fenomena ilmiah yang super keren. Yuk, kita mulai!</p>
-            
-            
+
+
                 <h2 id="metode">Metode Penelitian</h2>
-                <p>Artikel ini dibuat dengan cara menyelami buku-buku dan jurnal ilmiah, seperti The Molecular Basis of Love
-                    (Babková &
-                    Repiská, 2025), Love as a natural addiction (Esch & Stefano, 2025), dan beberapa artikel seru dari Verywell
-                    Mind. Kami
-                    merangkum fakta-fakta ilmiah ini dengan gaya yang mudah dicerna, menghubungkan sains tentang cinta dengan
-                    kisah-kisah
-                    sosial yang dekat dengan kita. Jadi, kamu bisa paham bagaimana otak dan budaya bekerja bareng untuk bikin cinta
-                    jadi
-                    pengalaman yang luar biasa.</p>
-            
+                <p>Untuk membuat artikel ini, kami menyelami buku dan jurnal ilmiah seperti <em>The Molecular Basis of
+                        Love</em>
+                    (Babková & Repiská,
+                    2025), <em>Love as a Natural Addiction</em> (Esch & Stefano, 2025), dan beberapa artikel seru dari
+                    <em>Verywell
+                        Mind</em>. Kami merangkum
+                    informasi ilmiah ini dengan gaya yang mudah dipahami, dan menghubungkan sains tentang cinta dengan
+                    kisah sosial yang
+                    dekat dengan kita. Jadi, Anda akan memiliki pemahaman tentang bagaimana budaya dan otak bekerja sama
+                    untuk
+                    menjadikan
+                    cinta sebagai pengalaman yang luar biasa.</p>
+
                 <h2 id="pembahasan">Pembahasan</h2>
                 <h3 id="biokimia">Cinta: Drama Kimia di Otak Kita</h3>
-                <p>Bayangin cinta itu kayak tiga babak dalam sebuah cerita: hasrat, ketertarikan, dan ikatan yang dalam. Setiap
-                    babak punya
-                    “pemain” utama, yaitu hormon dan zat kimia di otak seperti dopamin, oksitosin, vasopresin, serotonin,
-                    testosteron,
-                    neurotropin, kortisol, dan endorfin. Mereka ini yang bikin kita merasakan cinta dalam berbagai rasa dan warna.
+                <p>Cinta: Drama Kimia di Otak Kita Bayangin cinta sebagai tiga bagian cerita: hasrat, ketertarikan, dan
+                    ikatan yang
+                    kuat.
+                    Setiap babak memiliki "pemain" utama, yaitu hormon dan bahan kimia otak: dopamin, oksitosin,
+                    vasopresin, serotonin,
+                    testosteron, neurotropin, kortisol, endorfin, dan kortisol. Merekalah yang memberi kita perasaan
+                    cinta dalam
+                    berbagai rasa dan warna.
                 </p>
-            
+
                 <h3 id="dopamin">Dopamin: Bikin Hati Berbunga-bunga</h3>
-                <p>kamu merasa super bahagia, bersemangat, bahkan kadang lupa makan karena mikirin dia. Mirip banget sama efek obat,
-                    makanya kita bisa merasa “kecanduan” sama seseorang. Dopamin ini mendorong kita untuk terus dekat dengan
+                <p>Kamu merasa super bahagia, bersemangat, bahkan kadang lupa makan karena mikirin dia. Mirip banget
+                    sama efek obat,
+                    makanya kita bisa merasa "kecanduan" sama seseorang. Dopamin ini mendorong kita untuk terus dekat
+                    dengan
                     pasangan,
                     mencari momen seru bareng mereka.</p>
-            
+
                 <h3 id="oksitosin">Oksitosin: Pelukan yang Bikin Nyaman</h3>
-                <p>Oksitosin, atau yang sering disebut “hormon pelukan,” adalah perekat hubungan. Zat ini keluar saat kita pelukan,
-                    bergandengan tangan atau melakukan kontak fisik lainnya. Oksitosin bikin kita merasa percaya dan dekat sama pasangan. Penelitian bilang,
+                <p>Oksitosin, atau yang sering disebut "hormon pelukan," adalah perekat hubungan. Zat ini keluar saat
+                    kita pelukan,
+                    bergandengan tangan atau melakukan kontak fisik lainnya. Oksitosin bikin kita merasa percaya dan
+                    dekat sama
+                    pasangan. Penelitian bilang,
                     pasangan
-                    yang punya kadar oksitosin seimbang biasanya punya hubungan yang lebih awet dan harmonis. Hormon ini juga bikin
+                    yang punya kadar oksitosin seimbang biasanya punya hubungan yang lebih awet dan harmonis. Hormon ini
+                    juga bikin
                     kita
                     merasa nyaman, nggak cuma sama pacar, tapi juga keluarga atau temen dekat.</p>
-            
+
                 <h3 id="endorfin">Endorfin: Ketenangan Setelah Badai Cinta</h3>
-                <p>Setelah fase awal yang penuh drama dan bunga-bunga, endorfin datang membawa rasa tenang. Zat ini kayak pelukan
-                    hangat
-                    dari dalam, bikin kita merasa aman dan nyaman di hubungan jangka panjang. Selain itu, vasopresin bantu jaga
-                    kesetiaan,
-                    serotonin atur emosi biar nggak kelewatan, dan testosteron kasih dorongan gairah. Ada juga neurotropin, seperti
-                    NGF,
-                    yang bikin perasaan cinta di awal terasa lebih intens, dan kortisol yang bikin kita lebih pengen dekat sama
-                    orang lain
-                    saat hubungan masih baru.</p>
-            
+                <p>Endorfin membawa ketenangan setelah fase awal yang penuh emosi. Dalam hubungan jangka panjang, zat
+                    ini membuat kita
+                    merasa aman dan nyaman seperti pelukan hangat. Selain itu, vasopresin membantu menjaga kesetiaan,
+                    serotonin
+                    menyatukan
+                    emosi, dan testosteron memberikan gairah. Ada juga neurotropin, seperti NGF, yang meningkatkan
+                    perasaan cinta pada
+                    awalnya, dan kortisol, yang membuat kita ingin lebih dekat dengan orang lain saat hubungan masih
+                    baru.</p>
+
                 <h3 id="sosial-budaya">Cinta dan Cara Kita Hidup</h3>
-                <p>Cinta nggak cuma soal apa yang ada di otak, tapi juga tentang budaya di sekitar kita. Misalnya, kenapa sih kita
-                    suka
-                    kasih cokelat buat orang yang disayang? Ternyata, cokelat punya zat bernama phenylethylamine (PEA) yang bikin
-                    hati
-                    senang. Tapi, cinta juga bisa bikin pusing, lho—pikirkan cemburu atau patah hati yang bikin hati ambyar. Di
-                    banyak
-                    budaya, tradisi seperti pernikahan bikin ikatan emosional makin kuat lewat momen-momen spesial yang memicu
-                    oksitosin dan
-                    endorfin.</p>
-            
-                <h3 id="sosial-budaya">Kenapa Cinta Penting di Zaman Sekarang</h3>
-                <p>Cinta, entah itu sama pasangan, keluarga, atau sahabat, punya efek besar buat kesehatan kita. Sains bilang, cinta
-                    bisa
-                    nyalain bagian otak yang sama kayak saat kita kecanduan sesuatu, karena dopamin yang bikin kita ketagihan rasa
-                    bahagia.
-                    Tapi, kalau cinta berakhir, bisa bikin stres berat, bahkan bikin jantungan sementara karena hormon stres seperti
-                    kortisol naik drastis.</p>
-            
-                <p>Di zaman sekarang, media sosial bikin kita gampang dapat “dosis” dopamin dari like atau chat, tapi ini kadang
-                    bikin
-                    hubungan asli jadi kurang hangat. Gaya hidup modern, seperti jarang olahraga, juga bisa nurunin testosteron,
-                    yang bikin
-                    gairah atau koneksi sosial melempem. Tapi jangan khawatir! Ada cara simpel buat ngatasin ini. Coba deh teknik
-                    relaksasi,
-                    seperti tarik napas dalam-dalam atau meditasi. Ini bisa bantu nurunin stres, baik setelah putus cinta atau saat
+                <p>Cinta dan Cara Kita Hidup: Cinta adalah tentang budaya dan pikiran kita juga. Misalnya, alasan apa
+                    yang mendorong
                     kita
-                    lagi berjuang dengan kebiasaan buruk. Relaksasi juga bikin tubuh lebih sehat, kurang stres, dan bantu kita hidup
-                    lebih
-                    lama dengan hubungan yang lebih kuat.</p>
-            
+                    untuk memberikan cokelat kepada orang yang kita sayangi? Ternyata cokelat memiliki zat yang disebut
+                    <em>phenylethylamine</em>
+                    (PEA), yang dapat membuat hati senang. Tapi, cinta juga bisa bikin pusing, lho—pikirkan cemburu atau
+                    patah hati yang
+                    bikin hati ambyar. Di
+                    banyak
+                    budaya, tradisi seperti pernikahan bikin ikatan emosional makin kuat lewat momen-momen spesial yang
+                    memicu
+                    oksitosin dan
+                    endorfin.
+                </p>
+
+                <h3>Kenapa Cinta Penting di Zaman Sekarang</h3>
+                <p>Cinta, entah itu sama pasangan, keluarga, atau sahabat, punya efek besar buat kesehatan kita. Sains
+                    bilang, cinta
+                    bisa
+                    nyalain bagian otak yang sama kayak saat kita kecanduan sesuatu, karena dopamin yang bikin kita
+                    ketagihan rasa
+                    bahagia.
+                    Tapi, kalau cinta berakhir, bisa bikin stres berat, bahkan bikin jantungan sementara karena hormon
+                    stres seperti
+                    kortisol naik drastis.</p>
+
+                <p>Di zaman sekarang, media sosial bikin kita gampang dapat "dosis" dopamin dari <em>like</em> atau
+                    chat, tapi ini
+                    kadang
+                    bikin
+                    hubungan asli jadi kurang hangat. Gaya hidup modern, seperti tidak berolahraga, juga dapat
+                    mengurangi testosteron,
+                    yang mengurangi keinginan dan koneksi
+                    sosial. Tapi jangan khawatir, ada cara mudah untuk menyelesaikannya. Coba teknik untuk merelaksasi
+                    diri, seperti
+                    menarik
+                    napas dalam-dalam atau meditasi. Ini dapat membantu mengurangi stres, terutama ketika kita
+                    menghadapi masalah
+                    kebiasaan
+                    buruk atau putus cinta. Selain itu, relaksasi meningkatkan kesehatan tubuh kita, mengurangi stres,
+                    dan membantu kita
+                    menjalin hubungan yang lebih kuat selama jangka waktu yang lebih lama.</p>
+
                 <h2 id="kesimpulan">Kesimpulan</h2>
-                <p>Cinta itu seperti resep ajaib: ada dopamin yang bikin hati berbunga, oksitosin yang bikin kita merasa dekat, dan
-                    endorfin yang kasih ketenangan. Dengan sedikit bantuan dari sains, kita bisa lihat betapa luar biasanya
+                <p>Cinta itu seperti resep ajaib—ada dopamin yang bikin hati berbunga, oksitosin yang bikin kita merasa
+                    dekat, dan
+                    endorfin yang kasih ketenangan. Dengan sedikit bantuan dari sains, kita bisa lihat betapa luar
+                    biasanya
                     cinta—bukan cuma
-                    soal perasaan, tapi juga fenomena ilmiah yang bikin hidup lebih indah. Jadi, nikmati setiap momen cinta, karena
+                    soal perasaan, tapi juga fenomena ilmiah yang bikin hidup lebih indah. Jadi, nikmati setiap momen
+                    cinta, karena
                     itu
                     nggak cuma bikin hati senang, tapi juga bikin kita lebih sehat dan bahagia!</p>
-            
+
                 <h2 id="daftar-pustaka">Daftar Pustaka</h2>
                 <ul>
                     <li>Babková, J., &amp; Repiská, G. (2025). <em>The Molecular Basis of Love</em>. <em>IJMS</em>,
                         26(4), 1533. https://doi.org/10.3390/ijms26041533</li>
-                    <li>Esch, T., &amp; Stefano, G. B. (2025). <em>Love as a natural addiction</em>. <em>Cognitive,
+                    <li>Esch, T., &amp; Stefano, G. B. (2025). <em>Love as a Natural Addiction</em>. <em>Cognitive,
                             Affective, &amp; Behavioral Neuroscience</em>. https://doi.org/10.3758/s13415-025-01333-w
                     </li>
                     <li>Patil, Y. (2014). <em>Chemical Foundations of Love</em>. <em>International Journal of Scientific
                             &amp; Engineering Research</em>.</li>
                     <li>Pearce, E., Wlodarski, R., Machin, A., &amp; Dunbar, R. I. M. (2017). <em>PNAS</em>, 114(20),
                         5300–5305. https://doi.org/10.1073/pnas.1700712114</li>
-            
-                    <li>Verywell Mind. (n.d.). <em>The Science of Love</em>. Diakses dari https://www.verywellmind.com
+
+                    <li><em>Verywell Mind</em>. (n.d.). <em>The Science of Love</em>. Diakses dari
+                        https://www.verywellmind.com
                     </li>
                 </ul>
-            
+
                 <div id="unduh" class="figure">
-                    <button class="btn btn-accent" onclick="window.print()">Cetak / Simpan PDF</button>
-                </div>  
+                    <div class="download-options">
+                        <button class="btn btn-accent" id="generatePdf">
+                            <span id="pdfIcon">📄</span>
+                            <span id="pdfText">Buat PDF</span>
+                        </button>
+                        <button class="btn btn-small" onclick="window.print()">🖨️ Cetak</button>
+                        <button class="btn btn-small" id="copyLink">🔗 Salin Link</button>
+                    </div>
+                    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 8px;">
+                        Tips: Gunakan "Buat PDF" untuk hasil terbaik, atau "Cetak" untuk cetak cepat.
+                    </p>
+                </div>
             </article>
 
             <aside aria-label="Sidebar">
@@ -504,7 +658,15 @@
                     <div class="avatar" aria-hidden="true"></div>
                     <div>
                         <strong>Kafi Yudhoyono</strong>
-                        <div class="muted" style="color:var(--muted);font-size:.9rem">Mahasiswa | Suka Koding
+                        <div class="muted" style="color:var(--muted);font-size:.9rem">Mahasiswa S1 PPKn
+                        </div>
+                    </div>
+                </div>
+                <div class="card profile">
+                    <div class="avatar" aria-hidden="true"></div>
+                    <div>
+                        <strong>Sofyan Efendi</strong>
+                        <div class="muted" style="color:var(--muted);font-size:.9rem">Mahasiswa S1 PPKn
                         </div>
                     </div>
                 </div>
@@ -527,14 +689,15 @@
 
                 <div class="card">
                     <strong>Catatan Penulis</strong>
-                    <p style="margin-top:8px;color:var(--muted)">-</p>
+                    <p style="margin-top:8px;color:var(--muted)">Artikel ini menggabungkan penelitian terbaru dengan
+                        bahasa yang mudah dipahami untuk menjembatani sains dan kehidupan sehari-hari.</p>
                 </div>
             </aside>
         </section>
 
         <footer>
             <div class="footer-inner">
-                <div>© <span id="y"></span> Kafi Yudhoyono. Semua hak cipta dilindungi.</div>
+                <div>© <span id="y"></span> Semua hak cipta dilindungi.</div>
                 <div><a href="#">Kebijakan Privasi</a> · <a href="#">Disclaimer</a></div>
             </div>
         </footer>
@@ -544,11 +707,10 @@
         // Tahun footer
         document.getElementById('y').textContent = new Date().getFullYear();
 
-        // Toggle tema - fixed localStorage fallback
+        // Toggle tema
         const root = document.documentElement;
         const toggle = document.getElementById('toggleTheme');
 
-        // Check saved theme or default to dark
         let currentTheme = 'dark';
         try {
             const saved = localStorage.getItem('theme');
@@ -579,6 +741,7 @@
             const height = h.scrollHeight - h.clientHeight;
             const pct = Math.min(100, (scrolled / height) * 100);
             progress.style.width = pct + '%';
+
             // TOC highlight
             document.querySelectorAll('.toc a').forEach(a => a.classList.remove('active'));
             const ids = ['pendahuluan', 'metode', 'pembahasan', 'biokimia', 'dopamin', 'oksitosin', 'endorfin', 'sosial-budaya', 'kesimpulan', 'daftar-pustaka'];
@@ -594,10 +757,229 @@
         };
         document.addEventListener('scroll', onScroll, { passive: true });
         onScroll();
+
+        // PDF Generator dengan jsPDF
+        const downloadBtn = document.getElementById('downloadBtn');
+        const generatePdf = document.getElementById('generatePdf');
+        const copyLinkBtn = document.getElementById('copyLink');
+
+        // Fungsi untuk membuat PDF yang rapi
+        function createPDF() {
+            const pdfIcon = document.getElementById('pdfIcon');
+            const pdfText = document.getElementById('pdfText');
+
+            // Tampilkan loading
+            pdfIcon.innerHTML = '<span class="loading"></span>';
+            pdfText.textContent = 'Membuat PDF...';
+            generatePdf.disabled = true;
+
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('p', 'mm', 'a4');
+
+                // Konfigurasi font dan margin
+                const pageWidth = doc.internal.pageSize.getWidth();
+                const pageHeight = doc.internal.pageSize.getHeight();
+                const margin = 20;
+                const maxWidth = pageWidth - (margin * 2);
+                let yPos = margin;
+
+                // Fungsi helper untuk menambah halaman baru jika perlu
+                function checkNewPage(requiredHeight = 10) {
+                    if (yPos + requiredHeight > pageHeight - margin) {
+                        doc.addPage();
+                        yPos = margin;
+                        return true;
+                    }
+                    return false;
+                }
+
+                // Fungsi untuk menambah teks dengan word wrap
+                function addText(text, fontSize = 11, isBold = false, color = [0, 0, 0]) {
+                    doc.setFontSize(fontSize);
+                    doc.setFont('helvetica', isBold ? 'bold' : 'normal');
+                    doc.setTextColor(color[0], color[1], color[2]);
+
+                    const lines = doc.splitTextToSize(text, maxWidth);
+                    const lineHeight = fontSize * 0.4;
+
+                    checkNewPage(lines.length * lineHeight);
+
+                    lines.forEach(line => {
+                        if (yPos > pageHeight - margin) {
+                            doc.addPage();
+                            yPos = margin;
+                        }
+                        doc.text(line, margin, yPos);
+                        yPos += lineHeight;
+                    });
+
+                    yPos += 3; // Spacing setelah paragraf
+                }
+
+                // Header PDF
+                doc.setFillColor(244, 63, 94);
+                doc.rect(0, 0, pageWidth, 40, 'F');
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(20);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Sains di Balik Rasa Cinta', margin, 25);
+
+                yPos = 50;
+
+                // Subtitle
+                addText('Mengurai Biokimia Emosi: Dopamin, Oksitosin, dan Endorfin', 14, true, [100, 100, 100]);
+
+                // Meta info
+                addText('Ditulis oleh: Kafi Yudhoyono & Sofyan Efendi', 10, false, [120, 120, 120]);
+                addText('Diperbarui: 30 Agustus 2025', 10, false, [120, 120, 120]);
+                yPos += 5;
+
+                // Garis pemisah
+                doc.setDrawColor(200, 200, 200);
+                doc.line(margin, yPos, pageWidth - margin, yPos);
+                yPos += 10;
+
+                // Konten artikel
+                const sections = [
+                    {
+                        title: 'Pendahuluan',
+                        content: `Cinta dianggap misterius dan sulit dijelaskan. Molekul yang membentuk pengalaman emosional kita ditinggalkan oleh otak saat degup jantung dan perasaan bergelora. Dengan menggabungkan perspektif biologi, psikologi, dan budaya, penelitian ini menyelidiki zat kimia yang terlibat dalam cinta dan bagaimana pengaruhnya terhadap kehidupan sosial.
+
+Pernah gak sih saat jatuh cinta? Mikirin seseorang membuat Anda gelisah, atau bahkan tidak bisa tidur? Itu bukan hanya masalah perasaan. Otak kita bekerja keras untuk mengeluarkan zat kimia yang membuat kita merasa hidup di balik perasaan bahagia atau rindu yang membuat hidup kita lebih hidup.
+
+Apa sih zat kimia yang membuat kita jatuh cinta dalam artikel ini? Dan, bagaimana cinta ini memengaruhi hidup kita di dunia modern? Dengan sedikit bumbu sains dan cerita kehidupan sehari-hari, kita akan lihat bahwa cinta bukan cuma puisi, tapi juga fenomena ilmiah yang super keren.`
+                    },
+                    {
+                        title: 'Metode Penelitian',
+                        content: `Untuk membuat artikel ini, kami menyelami buku dan jurnal ilmiah seperti "The Molecular Basis of Love" (Babková & Repiská, 2025), "Love as a Natural Addiction" (Esch & Stefano, 2025), dan beberapa artikel seru dari Verywell Mind. Kami merangkum informasi ilmiah ini dengan gaya yang mudah dipahami, dan menghubungkan sains tentang cinta dengan kisah sosial yang dekat dengan kita.`
+                    },
+                    {
+                        title: 'Pembahasan',
+                        content: ''
+                    },
+                    {
+                        title: 'Cinta: Drama Kimia di Otak Kita',
+                        content: `Bayangin cinta sebagai tiga bagian cerita: hasrat, ketertarikan, dan ikatan yang kuat. Setiap babak memiliki "pemain" utama, yaitu hormon dan bahan kimia otak: dopamin, oksitosin, vasopresin, serotonin, testosteron, neurotropin, kortisol, endorfin, dan kortisol. Merekalah yang memberi kita perasaan cinta dalam berbagai rasa dan warna.`
+                    },
+                    {
+                        title: 'Dopamin: Bikin Hati Berbunga-bunga',
+                        content: `Kamu merasa super bahagia, bersemangat, bahkan kadang lupa makan karena mikirin dia. Mirip banget sama efek obat, makanya kita bisa merasa "kecanduan" sama seseorang. Dopamin ini mendorong kita untuk terus dekat dengan pasangan, mencari momen seru bareng mereka.`
+                    },
+                    {
+                        title: 'Oksitosin: Pelukan yang Bikin Nyaman',
+                        content: `Oksitosin, atau yang sering disebut "hormon pelukan," adalah perekat hubungan. Zat ini keluar saat kita pelukan, bergandengan tangan atau melakukan kontak fisik lainnya. Oksitosin bikin kita merasa percaya dan dekat sama pasangan. Penelitian bilang, pasangan yang punya kadar oksitosin seimbang biasanya punya hubungan yang lebih awet dan harmonis.`
+                    },
+                    {
+                        title: 'Endorfin: Ketenangan Setelah Badai Cinta',
+                        content: `Endorfin membawa ketenangan setelah fase awal yang penuh emosi. Dalam hubungan jangka panjang, zat ini membuat kita merasa aman dan nyaman seperti pelukan hangat. Selain itu, vasopresin membantu menjaga kesetiaan, serotonin menyatukan emosi, dan testosteron memberikan gairah.`
+                    },
+                    {
+                        title: 'Cinta dan Cara Kita Hidup',
+                        content: `Cinta adalah tentang budaya dan pikiran kita juga. Misalnya, alasan apa yang mendorong kita untuk memberikan cokelat kepada orang yang kita sayangi? Ternyata cokelat memiliki zat yang disebut phenylethylamine (PEA), yang dapat membuat hati senang. Tapi, cinta juga bisa bikin pusing, lho—pikirkan cemburu atau patah hati yang bikin hati ambyar.`
+                    },
+                    {
+                        title: 'Kenapa Cinta Penting di Zaman Sekarang',
+                        content: `Cinta, entah itu sama pasangan, keluarga, atau sahabat, punya efek besar buat kesehatan kita. Sains bilang, cinta bisa nyalain bagian otak yang sama kayak saat kita kecanduan sesuatu, karena dopamin yang bikin kita ketagihan rasa bahagia. Di zaman sekarang, media sosial bikin kita gampang dapat "dosis" dopamin dari like atau chat, tapi ini kadang bikin hubungan asli jadi kurang hangat.`
+                    },
+                    {
+                        title: 'Kesimpulan',
+                        content: `Cinta itu seperti resep ajaib—ada dopamin yang bikin hati berbunga, oksitosin yang bikin kita merasa dekat, dan endorfin yang kasih ketenangan. Dengan sedikit bantuan dari sains, kita bisa lihat betapa luar biasanya cinta—bukan cuma soal perasaan, tapi juga fenomena ilmiah yang bikin hidup lebih indah.`
+                    }
+                ];
+
+                // Tambahkan setiap section
+                sections.forEach((section, index) => {
+                    if (section.title === 'Pembahasan') {
+                        addText(section.title, 16, true, [244, 63, 94]);
+                        return;
+                    }
+
+                    const isMainTitle = ['Pendahuluan', 'Metode Penelitian', 'Kesimpulan'].includes(section.title);
+                    const titleSize = isMainTitle ? 16 : 13;
+                    const titleColor = isMainTitle ? [244, 63, 94] : [80, 80, 80];
+
+                    checkNewPage(20);
+                    addText(section.title, titleSize, true, titleColor);
+
+                    if (section.content) {
+                        addText(section.content, 11, false, [60, 60, 60]);
+                    }
+                });
+
+                // Daftar Pustaka
+                checkNewPage(40);
+                addText('Daftar Pustaka', 16, true, [244, 63, 94]);
+
+                const references = [
+                    'Babková, J., & Repiská, G. (2025). The Molecular Basis of Love. IJMS, 26(4), 1533.',
+                    'Esch, T., & Stefano, G. B. (2025). Love as a Natural Addiction. Cognitive, Affective, & Behavioral Neuroscience.',
+                    'Patil, Y. (2014). Chemical Foundations of Love. International Journal of Scientific & Engineering Research.',
+                    'Pearce, E., Wlodarski, R., Machin, A., & Dunbar, R. I. M. (2017). PNAS, 114(20), 5300–5305.',
+                    'Verywell Mind. (n.d.). The Science of Love. https://www.verywellmind.com'
+                ];
+
+                references.forEach((ref, i) => {
+                    addText(`${i + 1}. ${ref}`, 10, false, [80, 80, 80]);
+                });
+
+                // Footer PDF
+                yPos = pageHeight - 15;
+                doc.setFontSize(8);
+                doc.setTextColor(150, 150, 150);
+                doc.text('Generated on ' + new Date().toLocaleDateString('id-ID'), margin, yPos);
+                doc.text('Sains Cinta - Artikel Ilmiah Populer', pageWidth - margin - 60, yPos);
+
+                // Simpan PDF
+                doc.save('Sains-di-Balik-Rasa-Cinta.pdf');
+
+            } catch (error) {
+                console.error('Error membuat PDF:', error);
+                alert('Maaf, terjadi kesalahan saat membuat PDF. Silakan coba lagi atau gunakan opsi cetak.');
+            } finally {
+                // Reset button
+                pdfIcon.textContent = '📄';
+                pdfText.textContent = 'Buat PDF';
+                generatePdf.disabled = false;
+            }
+        }
+
+        // Event listeners
+        generatePdf.addEventListener('click', createPDF);
+
+        // Copy link functionality
+        copyLinkBtn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(window.location.href);
+                const originalText = copyLinkBtn.textContent;
+                copyLinkBtn.textContent = '✓ Tersalin!';
+                copyLinkBtn.style.background = 'rgba(34, 197, 94, 0.2)';
+
+                setTimeout(() => {
+                    copyLinkBtn.textContent = originalText;
+                    copyLinkBtn.style.background = '';
+                }, 2000);
+            } catch (err) {
+                alert('Tidak dapat menyalin link. Silakan salin manual dari address bar.');
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch (e.key) {
+                    case 'p':
+                        e.preventDefault();
+                        window.print();
+                        break;
+                    case 'd':
+                        e.preventDefault();
+                        createPDF();
+                        break;
+                }
+            }
+        });
     </script>
 </body>
 
 </html>
-
-
-
